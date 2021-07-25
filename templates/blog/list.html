@@ -1,0 +1,65 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+{% block content_nav %}
+{% endblock %}
+  
+    
+    <!-- Banner Ends Here -->
+
+    <section class="blog-posts">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="all-blog-posts">
+              <div class="row">
+                {% for article in object_list %}
+                <div class="col-lg-12">
+                  <div class="blog-post">
+                    <div class="blog-thumb">
+                      <img src="{{article.image.url}}" alt="">
+                    </div>
+                    <div class="down-content">
+                      <span>{{article.title}}</span>
+                      {% if article.is_special %}
+                      <span class="badge badge-danger" style="font-size: 12px;">Special</span>
+                      {% endif %}
+                      <a href="{% url 'blog:detail' slug=article.slug %}"><h4>{{article.snippet}}</h4></a>
+                      <ul class="post-info">
+                        <li><a href="{% url 'blog:author' article.author %}">{{article.author.get_full_name}}</a></li>
+                        <li><a>{{article.publish}}</a></li>
+                        <li><a>48 Comments</a></li>
+                      </ul>
+                        <a href="{% url 'blog:detail' slug=article.slug %}"><p>{{article.body|striptags|truncatechars:150}}</p></a>
+                      <div class="post-options">
+                        <div class="row">
+                          <div class="col-6">
+                            <ul class="post-tags">
+                              <li><i class="fa fa-tags"></i></li>
+                              {% for cat in article.category.active %}
+                              <a href="{% url 'blog:category' cat.slug %}"> #{{cat.title}}</a></li>
+                              {% endfor %}
+                            </ul>
+                          </div>
+                          <div class="col-6">
+                            <ul class="post-share">
+                              <li><i class="fa fa-share-alt"></i></li>
+                              <li><a href="#">Facebook</a>,</li>
+                              <li><a href="#">Twitter</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            
+                {% endfor %}
+        {% block pager_number %}
+
+        {% endblock %}
+          </div>
+        </div>
+      </div>
+    </section>
+
+{% endblock %}

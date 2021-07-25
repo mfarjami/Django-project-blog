@@ -1,0 +1,21 @@
+<div class="collapse navbar-collapse" id="navbarResponsive">
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+            <a class="nav-link" href="{% url 'blog:home' %}">Home
+            <span class="sr-only">(current)</span>
+            </a>
+        </li> 
+        {% for cat in category %}
+        {% if cat.parent == None %}
+            <li class="nav-item active">
+            <a class="nav-link" href="{% url 'blog:category' cat.slug %}">{{cat.title}}
+                <span class="sr-only">(current)</span>
+                {% if cat.children.active %}
+                    {% include 'blog/partials/category_loop.html' %}
+                {% endif %}
+            </a>
+            </li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+</div>

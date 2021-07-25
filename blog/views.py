@@ -1,0 +1,58 @@
+from django.shortcuts import render, get_object_or_404
+from account.models import User
+from django.views.generic import *
+from .models import *
+from account.mixins import *
+# Create your views here.
+class ArticleList(ListView):
+    queryset = Article.objects.published()[:4]
+
+
+class ArticleAllList(ListView):
+    queryset = Article.objects.published()
+    template_name = "blog/Article_blog.html"
+    paginate_by = 6
+
+class ArticleDetail(DeleteView):
+    template_name = 'blog/Article_detail.html'
+    def get_object(self):
+        slug =  self.kwargs.get('slug')
+        return get_object_or_404(Article.objects.published(), slug=slug)
+
+class ArticlePreview(AuthorAccessMixin, DeleteView):
+    template_name = 'blog/Article_detail.html'
+    def get_object(self):
+        pk =  self.kwargs.get('pk')
+        return get_object_or_404(Article, pk=pk)
+
+
+    
+class CategoryList(ListView):
+    paginate_by = 4
+    template_name = "blog/category_list.html"
+
+    def get_queryset(self):
+        global category
+        slug =  self.kwargs.get('slug')
+        category = get_object_or_404(Category.objects.active(), slug=slug)
+        return category.articles.published()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category'] = category
+        return context
+    
+class AuthorList(ListView):
+    paginate_by = 4
+    template_name = "blog/author_list.html"
+
+    def get_queryset(self):
+        global author
+        username =  self.kwargs.get('username')
+        author = get_object_or_404(User, username=username)
+        return author.articles.published()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['author'] = author
+        return context

@@ -1,0 +1,65 @@
+a.navbar-brand {
+    margin-left: -110px;
+    mar
+}
+ul.navbar-nav.ml-auto {
+    margin-right: -106px;
+}
+
+.page-content {
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 24px;
+}
+
+.container {
+    font-size: inherit;
+}
+
+
+.page-heading .text-content h4 {
+    font-size: 29px;
+}
+
+.page-content.col-lg-12 {
+  margin-left: 500px;
+}
+
+
+
+
+
+
+
+li {
+    display: block;
+    transition-duration: 0.5s;
+   }
+   
+   li:hover {
+     cursor: pointer;
+   }
+   
+   ul li ul {
+     visibility: hidden;
+     opacity: 0;
+     position: absolute;
+     transition: all 0.5s ease;
+     margin-top: 1rem;
+     right: auto 150px;
+     display: none;
+   }
+   
+   ul li:hover > ul,
+   ul li ul:hover {
+     visibility: visible;
+     opacity: 1;
+     display: table-cell;
+   }
+   
+   ul li ul li {
+     clear: both;
+     width: 100%;
+   }
+
+

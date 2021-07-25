@@ -1,0 +1,120 @@
+{% extends 'blog/list.html' %}
+{% block content_nav %}
+    <!-- Page Content -->
+    <!-- Banner Starts Here -->
+    <div class="heading-page header-text" >
+      <section class="page-heading">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12" >
+              <div class="text-content text-center" >
+                <h4> Author:  {{author.get_full_name}}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      </div>
+{% endblock %}
+  {% block pager_number %}
+        {% if is_paginated %}
+        <div class="page-content">
+          <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              {% if page_obj.has_previous %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                  <span class="sr-only">Previous</span>
+                </a>
+              </li>
+              {% endif %}
+              <li class="page-item page-link">{{page_obj.number}}</li>
+              {% if page_obj.has_next %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </li>
+              {% endif %}
+            </ul>
+          </nav>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="sidebar">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="sidebar-item search">
+            <form id="search_form" name="gs" method="GET" action="#">
+              <input type="text" name="q" class="searchText" placeholder="type to search..." autocomplete="on">
+            </form>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="sidebar-item recent-posts">
+            <div class="sidebar-heading">
+              <h2>Recent Posts</h2>
+            </div>
+            <div class="content">
+              <ul>
+                <li><a href="post-details.html">
+                  <h5>Vestibulum id turpis porttitor sapien facilisis scelerisque</h5>
+                  <span>May 31, 2020</span>
+                </a></li>
+                <li><a href="post-details.html">
+                  <h5>Suspendisse et metus nec libero ultrices varius eget in risus</h5>
+                  <span>May 28, 2020</span>
+                </a></li>
+                <li><a href="post-details.html">
+                  <h5>Swag hella echo park leggings, shaman cornhole ethical coloring</h5>
+                  <span>May 14, 2020</span>
+                </a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="sidebar-item categories">
+            <div class="sidebar-heading">
+              <h2>Categories</h2>
+            </div>
+            <div class="content">
+              <ul>
+                <li><a href="#">- Nature Lifestyle</a></li>
+                <li><a href="#">- Awesome Layouts</a></li>
+                <li><a href="#">- Creative Ideas</a></li>
+                <li><a href="#">- Responsive Templates</a></li>
+                <li><a href="#">- HTML5 / CSS3 Templates</a></li>
+                <li><a href="#">- Creative &amp; Unique</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="sidebar-item tags">
+            <div class="sidebar-heading">
+              <h2>Tag Clouds</h2>
+            </div>
+            <div class="content">
+              <ul>
+                <li><a href="#">Lifestyle</a></li>
+                <li><a href="#">Creative</a></li>
+                <li><a href="#">HTML5</a></li>
+                <li><a href="#">Inspiration</a></li>
+                <li><a href="#">Motivation</a></li>
+                <li><a href="#">PSD</a></li>
+                <li><a href="#">Responsive</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
