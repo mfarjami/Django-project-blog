@@ -55,3 +55,7 @@ class Login(LoginView):
             return reverse_lazy("account:home")
         else:
             return reverse_lazy("account:profile")
+
+
+class PasswordChange(PasswordChangeView):
+    success_url = reverse_lazy("account:password_change_done")
