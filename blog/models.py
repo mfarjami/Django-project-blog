@@ -6,6 +6,8 @@ from django.db.models.fields import related
 from django.utils.html import format_html
 from django.utils import timezone
 from extensions.utils import converter
+from django.contrib.contenttypes.fields import GenericRelation
+from comment.models import Comment
 # Create your models here.
 
 class ArticleManager(models.Manager):
@@ -55,6 +57,7 @@ class Article(models.Model):
     updated = models.DateTimeField(auto_now=True)
     is_special = models.BooleanField(default=False, verbose_name='Special')
     status = models.CharField(max_length = 1, choices=STATUS_CHOICES)
+    comments = GenericRelation(Comment)
     
     
     def __str__(self):

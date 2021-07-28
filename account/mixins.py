@@ -38,7 +38,7 @@ class AuthorsAccessMixin():
             else:
                 return redirect("account:profile")
         else:
-            return redirect("account:login")
+            return redirect("login")
 
 class SuperuserAccessMixin():
     def dispatch(self, request, *args, **kwargs):

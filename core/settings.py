@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+from decouple import config
 from pathlib import Path
 import os
 
@@ -38,11 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_gravatar',
     'blog.apps.BlogConfig',
     'account.apps.AccountConfig',
     'extensions',
     'widget_tweaks',
     'crispy_forms',
+    'comment',
 ]
 
 MIDDLEWARE = [
@@ -58,8 +60,8 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'core.urls'
 
 LOGIN_REDIRECT_URL = 'account:home'
-LOGIN_URL = 'account:login'
-LOGOUT_REDIRECT_URL = 'account:login'
+LOGIN_URL = 'login'
+LOGOUT_REDIRECT_URL = 'login'
 
 TEMPLATES = [
     {
@@ -145,3 +147,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 AUTH_USER_MODEL = 'account.User'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# EMAIL_BACKEND ='django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = config("EMAIL_HOST")
+# EMAIL_USE_TLS = True
+# EMAIL_PORT = config("EMAIL_PORT")
+# EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+# EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")

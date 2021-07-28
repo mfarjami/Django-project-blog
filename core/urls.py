@@ -15,15 +15,23 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.conf import settings
-from django.conf.urls.static import static
+from account.views import *
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', include("blog.urls")),
+    path('', include("django.contrib.auth.urls")),
+    path('login/', Login.as_view(), name='login'),
+    path('register/', Register.as_view(), name='register'),
+    # re_path(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', activate, name='activate'),
+    path('activate/<uidb64>/<token>', activate, name='activate'),
+    path('admin/', admin.site.urls),
     path('account/', include("account.urls")),
+    path('comment/', include('comment.urls')),
 ]
+
+from django.conf import settings
+from django.conf.urls.static import static
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
