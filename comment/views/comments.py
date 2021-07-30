@@ -2,13 +2,15 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.template.loader import render_to_string
 from django.utils import timezone
 from django.contrib import messages
-
 from comment.models import Comment
 from comment.forms import CommentForm
 from comment.utils import get_comment_from_key, get_user_for_request, CommentFailReason
 from comment.mixins import CanCreateMixin, CanEditMixin, CanDeleteMixin, CommentCreateMixin, BaseCommentView
 from comment.responses import UTF8JsonResponse
 from comment.messages import EmailError
+from django.core.mail import EmailMessage
+from django.contrib.sites.shortcuts import get_current_site
+from django.urls import reverse
 
 
 class CreateComment(CanCreateMixin, CommentCreateMixin):
@@ -41,7 +43,45 @@ class CreateComment(CanCreateMixin, CommentCreateMixin):
         )
         self.comment = self.perform_create(temp_comment, self.request)
         self.data = render_to_string(self.get_template_names(), self.get_context_data(), request=self.request)
-        return UTF8JsonResponse(self.json())
+# send email section
+        current_site = get_current_site(self.request)
+        article = self.comment.content_object
+        author_email = article.author.email
+        user_email = self.comment.user.email
+        if author_email == user_email:
+            author_email = False
+            user_email = False
+        parent_email = False
+        if self.comment.parent:
+            parent_email = self.comment.parent.email
+        if parent_email in [author_email, user_email]:
+            parent_email = False
+
+        if author_email:
+            email = EmailMessage(
+                        "New comment",
+                        "A new comment has been sent for the article «{}» you are the author of:\n{}{}".format(article, current_site, reverse('blog:detail', kwargs={'slug': article.slug})),
+                        to=[author_email]
+            )
+            email.send()
+
+        if user_email:
+            email = EmailMessage(
+                        "Comment received",
+                        "Your comment has been received and we will respond to it soon.",
+                        to=[user_email]
+            )
+            email.send()
+
+
+        if parent_email:
+            email = EmailMessage(
+                        "Reply to your comment",
+                        "A response to your comment has been recorded in the article «{}» Click on the link below to view it:\n{}{}".format(article, current_site, reverse('blog:detail', kwargs={'slug': article.slug})),
+                        to=[parent_email]
+            )
+            email.send()
+            return UTF8JsonResponse(self.json())
 
     def form_invalid(self, form):
         self.error = EmailError.EMAIL_INVALID
