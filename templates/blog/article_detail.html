@@ -2,6 +2,7 @@
 {% block title %}Welcom | {{object.title}}{% endblock %}
 {% block content %}
 {% load comment_tags %} 
+{% load ratings %}
     <!-- Page Content -->
     <!-- Banner Starts Here -->
     <div class="heading-page header-text">
@@ -16,6 +17,9 @@
                 {% if article.is_special %}
                 <span class="badge badge-danger" style="font-size: 12px;">Special</span>
                 {% endif %}
+                <div>
+                  {% ratings object %}
+                </div>
               </div>
             </div>
           </div>

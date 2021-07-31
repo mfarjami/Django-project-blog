@@ -2,6 +2,11 @@
 {% block content %}
 {% block content_nav %}
 {% endblock %}
+{% load i18n %}
+{% load comment_tags %}
+{% load ratings %}
+
+
   
     
     <!-- Banner Ends Here -->
@@ -20,6 +25,9 @@
                     </div>
                     <div class="down-content">
                       <span>{{article.title}}</span>
+                      <div>
+                        {% ratings article %}
+                      </div>
                       {% if article.is_special %}
                       <span class="badge badge-danger" style="font-size: 12px;">Special</span>
                       {% endif %}
@@ -27,7 +35,7 @@
                       <ul class="post-info">
                         <li><a href="{% url 'blog:author' article.author %}">{{article.author.get_full_name}}</a></li>
                         <li><a>{{article.publish}}</a></li>
-                        <li><a>48 Comments</a></li>
+                        <li><a href="{% url 'blog:detail' slug=article.slug %}"> {% trans "Comments" %} </a></li>
                       </ul>
                         <a href="{% url 'blog:detail' slug=article.slug %}"><p>{{article.body|striptags|truncatechars:150}}</p></a>
                       <div class="post-options">
