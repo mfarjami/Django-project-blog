@@ -3,6 +3,7 @@ from account.models import User
 from django.views.generic import *
 from .models import *
 from account.mixins import *
+
 # Create your views here.
 class ArticleList(ListView):
     queryset = Article.objects.published()[:4]
@@ -17,7 +18,13 @@ class ArticleDetail(DeleteView):
     template_name = 'blog/Article_detail.html'
     def get_object(self):
         slug =  self.kwargs.get('slug')
-        return get_object_or_404(Article.objects.published(), slug=slug)
+        article =  get_object_or_404(Article.objects.published(), slug=slug)
+
+        ip_address = self.request.user.ip_address
+        if article not in ip_address.hits.all():
+            article.hits.add(ip_address)
+
+        return article
 
 class ArticlePreview(AuthorAccessMixin, DeleteView):
     template_name = 'blog/Article_detail.html'

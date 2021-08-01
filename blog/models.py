@@ -10,6 +10,9 @@ from django.contrib.contenttypes.fields import GenericRelation
 from comment.models import Comment
 # Create your models here.
 
+class IPAddress(models.Model):
+    ip_address = models.GenericIPAddressField()
+
 class ArticleManager(models.Manager):
     def published(self):
         return self.filter(status='p')
@@ -58,6 +61,8 @@ class Article(models.Model):
     is_special = models.BooleanField(default=False, verbose_name='Special')
     status = models.CharField(max_length = 1, choices=STATUS_CHOICES)
     comments = GenericRelation(Comment)
+    hits = models.ManyToManyField(IPAddress, blank=True, related_name='hits')
+    
     
     
     def __str__(self):

@@ -35,7 +35,7 @@
                       <ul class="post-info">
                         <li><a href="{% url 'blog:author' article.author %}">{{article.author.get_full_name}}</a></li>
                         <li><a>{{article.publish}}</a></li>
-                        <li><a href="{% url 'blog:detail' slug=article.slug %}"> {% trans "Comments" %} </a></li>
+                        <li><a>Hits: {{article.hits.count}}</a></li>
                       </ul>
                         <a href="{% url 'blog:detail' slug=article.slug %}"><p>{{article.body|striptags|truncatechars:150}}</p></a>
                       <div class="post-options">
