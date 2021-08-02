@@ -9,6 +9,7 @@ class ArticleList(ListView):
     queryset = Article.objects.published()[:4]
 
 
+
 class ArticleAllList(ListView):
     queryset = Article.objects.published()
     template_name = "blog/Article_blog.html"
