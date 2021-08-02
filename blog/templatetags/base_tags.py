@@ -5,12 +5,6 @@ from datetime import *
 
 register = template.Library()
 
-@register.inclusion_tag('blog/partials/popular_articles.html')
-def popular_articles():
-   last_month = datetime.today() - timedelta(days=30)
-   return {
-      'popular_articles' : Article.objects.published().annotate(count=Count('hits', filter=Q(articlehit__created__gt=last_month))).order_by('-count', '-publish')[:5]
-   }
 
 @register.inclusion_tag('blog/partials/category_nav.html')
 def category_navbar():
@@ -18,6 +12,21 @@ def category_navbar():
       'category' : Category.objects.filter(status=True)
    }
 
+@register.inclusion_tag('blog/partials/sidebar.html')
+def popular_articles():
+   last_month = datetime.today() - timedelta(days=30)
+   return {
+      'articles' : Article.objects.published().annotate(count=Count('hits', filter=Q(articlehit__created__gt=last_month))).order_by('-count', '-publish')[:5],
+      'title':'Most visited articles of the month'
+   }
+
+@register.inclusion_tag('blog/partials/sidebar.html')
+def hot_articles():
+   last_month = datetime.today() - timedelta(days=30)
+   return {
+      'articles' : Article.objects.published().annotate(count=Count('comments', filter=Q(comments__posted__gt=last_month) and Q(comments__content_type_id=7))).order_by('-count', '-publish')[:5],
+      'title':'Hot articles of the month'
+   }
 
 @register.inclusion_tag('registration/partials/link.html')
 def link(request, link_name, content, classes):

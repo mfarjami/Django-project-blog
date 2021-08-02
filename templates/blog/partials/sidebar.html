@@ -1,7 +1,7 @@
 <div class="popular_articles">
-    <h2 style="font-size: 30px;">Most visited articles of the month</h2>
+    <h2 style="font-size: 30px;">{{title}}</h2>
     <hr>
-    {% for a in popular_articles %}
+    {% for a in articles %}
         <div class="title">
             <a href="{% url 'blog:detail' a.slug %}">{{a.title}}</a>
         </div>

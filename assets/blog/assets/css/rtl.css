@@ -62,14 +62,17 @@ li {
      width: 100%;
    }
 
+aside {
+left: 854px;
+position: absolute;
+width: 481px;
+}
 
 .popular_articles {
   border: 1px solid #ddd;
   padding: 15px;
   border-radius: 5px;
-  left: 854px;
-  position: absolute;
-  width: 481px;
+  margin-bottom: 20px;
   box-shadow: 5px 5px #a9a7a7;
 }
 
