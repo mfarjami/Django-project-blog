@@ -11,4 +11,5 @@ urlpatterns = [
     path('preview/<int:pk>', ArticlePreview.as_view(), name='preview'),
     path('category/<slug:slug>/', CategoryList.as_view(), name='category'),
     path('author/<slug:username>/', AuthorList.as_view(), name='author'),
+    path('search/', SearchList.as_view(), name='search'),
 ]

@@ -28,6 +28,7 @@ def hot_articles():
       'title':'Hot articles of the month'
    }
 
+
 @register.inclusion_tag('registration/partials/link.html')
 def link(request, link_name, content, classes):
    return {

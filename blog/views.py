@@ -3,6 +3,7 @@ from account.models import User
 from django.views.generic import *
 from .models import *
 from account.mixins import *
+from django.db.models import *
 
 # Create your views here.
 class ArticleList(ListView):
@@ -51,7 +52,7 @@ class CategoryList(ListView):
         return context
     
 class AuthorList(ListView):
-    paginate_by = 4
+    paginate_by = 1
     template_name = "blog/author_list.html"
 
     def get_queryset(self):
@@ -64,3 +65,15 @@ class AuthorList(ListView):
         context = super().get_context_data(**kwargs)
         context['author'] = author
         return context
+
+class SearchList(ListView):
+	template_name = 'blog/search_list.html'
+
+	def get_queryset(self):
+		search = self.request.GET.get('q')
+		return Article.objects.filter(Q(body__icontains=search) | Q(title__icontains=search) | Q(snippet__icontains=search))
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['search'] = self.request.GET.get('q')
+		return context

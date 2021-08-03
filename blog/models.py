@@ -8,7 +8,9 @@ from django.utils import timezone
 from extensions.utils import converter
 from django.contrib.contenttypes.fields import GenericRelation
 from comment.models import Comment
+
 # Create your models here.
+
 
 class IPAddress(models.Model):
     ip_address = models.GenericIPAddressField()
