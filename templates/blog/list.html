@@ -3,6 +3,7 @@
 {% block content_nav %}
 {% endblock %}
 {% load ratings %}
+{% load humanize %}
 
 
   
@@ -32,7 +33,7 @@
                       <a href="{% url 'blog:detail' slug=article.slug %}"><h4>{{article.snippet}}</h4></a>
                       <ul class="post-info">
                         <li><a href="{% url 'blog:author' article.author %}">{{article.author.get_full_name}}</a></li>
-                        <li><a>{{article.publish}}</a></li>
+                        <li><a>{{article.publish|naturaltime}}</a></li>
                         <li><a>Hits: {{article.hits.count}}</a></li>
                       </ul>
                         <a href="{% url 'blog:detail' slug=article.slug %}"><p>{{article.body|striptags|truncatechars:150}}</p></a>

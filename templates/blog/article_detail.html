@@ -4,6 +4,7 @@
 {% load comment_tags %} 
 {% load ratings %}
 {% load base_tags %}
+{% load humanize %}
 
 
     <!-- Page Content -->
@@ -49,7 +50,7 @@
                       <h4>{{object.snippet}}</h4>
                       <ul class="post-info">
                         <li><a href="{% url 'blog:author' object.author %}">{{object.author.get_full_name}}</a></li>
-                        <li><a>{{object.publish}}</a></li>
+                        <li><a>{{object.publish|naturaltime}}</a></li>
                       </ul>
                       {% if object.is_special %}
                         {% if user.is_authenticated and user.is_special_user or user == object.author or user.is_superuser %}

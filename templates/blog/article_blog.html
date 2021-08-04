@@ -1,8 +1,7 @@
 {% extends 'blog/base.html' %}
 {% block content %}
 {% load ratings %}
-{% load i18n %}
-{% load comment_tags %}
+{% load humanize %}
 
     <!-- Page Content -->
     <!-- Banner Starts Here -->
@@ -58,7 +57,7 @@
                       <a href="{% url 'blog:detail' slug=article.slug %}"><h4>{{article.snippet}}</h4></a>
                       <ul class="post-info">
                         <li><a href="{% url 'blog:author' article.author %}">{{ article.author.get_full_name }}</a></li>
-                        <li><a>{{article.publish}}</a></li>
+                        <li><a>{{article.publish|naturaltime}}</a></li>
                         <li><a>Hits: {{article.hits.count}}</a></li>
                       </ul>
                         <a href="{% url 'blog:detail' slug=article.slug %}"><p>{{article.body|striptags|truncatechars:430}}</p></a>
